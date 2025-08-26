@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { login } from "../api/function";
+import { login } from "../../api/function";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -36,7 +36,11 @@ function Login() {
       try {
         const rs = await login({ email, password });
         const token = rs.data?.data?.token;
+        const role = rs.data?.data?.role;
+
         localStorage.setItem("token", token);
+        localStorage.setItem("role", role);
+
         navigate("/admin");
       } catch (error) {
         console.log(error.response?.data?.errors);

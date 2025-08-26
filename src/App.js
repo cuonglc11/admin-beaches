@@ -1,4 +1,3 @@
-import Login from "./page/login";
 import "./index.css";
 import AppRouter from "./routers";
 import { ToastContainer } from "react-toastify";

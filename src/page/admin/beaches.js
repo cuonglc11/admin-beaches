@@ -6,11 +6,10 @@ import {
   region,
   updateBeaches,
   url,
-} from "../api/function";
+} from "../../api/function";
 import { Editor } from "@tinymce/tinymce-react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-
 
 function Beaches() {
   const [listBeaches, setListBeaches] = useState([]);
@@ -52,14 +51,13 @@ function Beaches() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log(formData.images);
     const data = new FormData();
 
     formData.images.forEach((file) => {
       if (file instanceof File) {
-        data.append("images[]", file); // file mới upload
+        data.append("images[]", file); 
       } else if (!file.isNew && file.url) {
-        data.append("old_images[]", file.url); // ảnh cũ
+        data.append("old_images[]", file.url); 
       }
     });
     data.append("name", formData.name);
@@ -120,24 +118,24 @@ function Beaches() {
     console.log(formData);
   };
   const handleDelete = (value) => {
-   Swal.fire({
-     title: "Are you sure you want to delete?",
-     text: "This action cannot be undone.!",
-     icon: "warning",
-     showCancelButton: true,
-     confirmButtonText: "DELETE",
-     cancelButtonText: "Cancel",
-   }).then(async (result) => {
-     if (result.isConfirmed) {
-       try {
-         const rs = await deleteBeache(value.id);
-         Swal.fire("Deleted!", "Data has been deleted.", "success");
-         fetchData();
-       } catch (error) {
-         Swal.fire("Failed!", "Delete failed, please try again.", "error");
-       }
-     }
-   });
+    Swal.fire({
+      title: "Are you sure you want to delete?",
+      text: "This action cannot be undone.!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "DELETE",
+      cancelButtonText: "Cancel",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const rs = await deleteBeache(value.id);
+          Swal.fire("Deleted!", "Data has been deleted.", "success");
+          fetchData();
+        } catch (error) {
+          Swal.fire("Failed!", "Delete failed, please try again.", "error");
+        }
+      }
+    });
   };
   if (loading) return <p>⏳ Đang tải dữ liệu...</p>;
 
