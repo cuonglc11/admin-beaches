@@ -22,6 +22,9 @@ export const updateBeaches = (data, id) =>
 export const deleteBeache = (id) => api.delete("admin/beaches/" + id);
 export const url = "http://127.0.0.1:8000";
 export const loginAccout = (data) => api.post("login-account", data);
+export const accounts = () => api.get("admin/account-list");
+export const accountsStatus = (data) => api.post("admin/account-list" , data);
+
 export const sentOtpPass = (data) => api.post("customer/sent-otp", data);
 export const vefifyOtp = (data) => api.post("customer/change-otp", data);
 export const vefifyPass = (data) => api.post("customer/change-password", data);

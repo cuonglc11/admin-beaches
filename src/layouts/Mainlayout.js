@@ -32,6 +32,14 @@ function Mainlayout({ children }) {
             >
               Beach Management
             </button>
+            <button
+              className={`tab-btn ${
+                location.pathname === "/admin/account" ? "active" : ""
+              }`}
+              onClick={() => navigate("/admin/account")}
+            >
+              Accout Management
+            </button>
           </div>
           <button className="logout-btn" onClick={handleLogout}>
             Logout

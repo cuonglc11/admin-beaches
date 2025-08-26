@@ -16,6 +16,7 @@ import ForgotPasswordForm from "../page/home/ForgotPasswordForm";
 import Otp from "../page/home/Otp";
 import ResetPassword from "../page/home/ResetPassword";
 import Register from "../page/home/Register";
+import Accout from "../page/admin/accout";
 
 const auth = () => {
   const token = localStorage.getItem("token");
@@ -65,6 +66,16 @@ const AppRouter = () => {
             <PrivateRoute>
               <Mainlayout>
                 <Beaches />
+              </Mainlayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/account"
+          element={
+            <PrivateRoute>
+              <Mainlayout>
+                <Accout />
               </Mainlayout>
             </PrivateRoute>
           }

@@ -125,40 +125,7 @@ function Region() {
       ) : (
         <div></div>
       )}
-      {/* <table className="user-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {regionlist.map((item) => (
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>{item.name}</td>
-              <td>
-                <button
-                  className="btn-edit"
-                  onClick={() => handleEdit(item)}
-                  disabled={isLoading}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn-block"
-                  onClick={() => handleDelete(item)}
-                  disabled={isLoading}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
-      <table className="w-full border-collapse text-center border border-gray-300 ">
+      <table className="w-full  text-center ">
         <thead className="bg-[#007C85] text-[#fff]">
           <tr>
             <th className="border border-gray-300 p-2">#</th>

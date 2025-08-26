@@ -50,9 +50,6 @@ function Register() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (validateForm()) {
-    //   return;
-    // }
     setIsLoading(true);
     try {
       const rs = await registerAccount({
