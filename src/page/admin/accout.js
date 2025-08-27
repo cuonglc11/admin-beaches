@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { accounts, accountsStatus } from "../../api/function";
+import { accounts, accountsStatus, searchAccount } from "../../api/function";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 function Accout() {
   const [listAccount, setListAccount] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -52,10 +53,27 @@ function Accout() {
       }
     });
   };
+  const handleSearch = async () => {
+    try {
+      const rs = await searchAccount(search);
+      setListAccount(rs.data?.data || []);
+    } catch (error) {}
+  };
   if (loading) return <p>⏳ Đang tải dữ liệu...</p>;
 
   return (
     <div>
+      <input
+        type="text"
+        placeholder="Search..."
+        className="px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm mb-3"
+        onChange={(e) => setSearch(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSearch();
+          }
+        }}
+      />
       <table className="user-table">
         <thead>
           <tr>

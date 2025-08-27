@@ -3,6 +3,7 @@ import {
   addRegion,
   deleteRegion,
   region,
+  searchRegion,
   updateRegion,
 } from "../../api/function";
 import { toast } from "react-toastify";
@@ -14,6 +15,7 @@ function Region() {
   const [formData, setFormData] = useState({ name: "", id: null });
   const [showForm, setShowForm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [search, setSearch] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -68,6 +70,14 @@ function Region() {
     setFormData(value);
     setShowForm(true);
   };
+  const handleSearch = async() => {
+    try {
+      const rs = await searchRegion(search);
+      setRegions(rs.data?.data || []);
+    } catch (error) {
+      
+    }
+  };
   const handleDelete = (value) => {
     Swal.fire({
       title: "Are you sure you want to delete?",
@@ -91,13 +101,28 @@ function Region() {
   if (loading) return <p>⏳ Đang tải dữ liệu...</p>;
   return (
     <>
-      <button
-        type="submit"
-        className="px-5 py-2 rounded-xl bg-blue-600 text-white font-medium shadow-md hover:bg-blue-700 hover:shadow-lg transition duration-300 mb-3"
-        onClick={() => (showForm ? setShowForm(false) : setShowForm(true))}
-      >
-        Add
-      </button>
+      <div className="flex items-center gap-3 mb-3">
+        <button
+          type="submit"
+          className="px-5 py-2 rounded-xl bg-blue-600 text-white font-medium shadow-md hover:bg-blue-700 hover:shadow-lg transition duration-300"
+          onClick={() => (showForm ? setShowForm(false) : setShowForm(true))}
+        >
+          Add
+        </button>
+
+        <input
+          type="text"
+          placeholder="Search..."
+          className="px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
+        />
+      </div>
+
       {showForm ? (
         <div>
           <form className="user-form" onSubmit={handleSubmit}>

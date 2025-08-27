@@ -4,6 +4,7 @@ import {
   beaches,
   deleteBeache,
   region,
+  searchBeaches,
   updateBeaches,
   url,
 } from "../../api/function";
@@ -18,6 +19,7 @@ function Beaches() {
   const [showForm, setShowForm] = useState(false);
   const [loading, setLoading] = useState(true);
   const [previewImg, setPreviewImg] = useState(null);
+  const [search, setSearch] = useState("");
 
   const [formData, setFromData] = useState({
     name: "",
@@ -55,9 +57,9 @@ function Beaches() {
 
     formData.images.forEach((file) => {
       if (file instanceof File) {
-        data.append("images[]", file); 
+        data.append("images[]", file);
       } else if (!file.isNew && file.url) {
-        data.append("old_images[]", file.url); 
+        data.append("old_images[]", file.url);
       }
     });
     data.append("name", formData.name);
@@ -137,17 +139,36 @@ function Beaches() {
       }
     });
   };
+  const handleSearch = async () => {
+    try {
+      const rs = await searchBeaches(search);
+      setListBeaches(rs.data?.data || []);
+    } catch (error) {}
+  };
   if (loading) return <p>⏳ Đang tải dữ liệu...</p>;
 
   return (
     <div>
-      <button
-        type="submit"
-        className="px-5 py-2 rounded-xl bg-blue-600 text-white font-medium shadow-md hover:bg-blue-700 hover:shadow-lg transition duration-300 mb-3"
-        onClick={() => (showForm ? setShowForm(false) : setShowForm(true))}
-      >
-        Add
-      </button>
+      <div className="flex items-center gap-3 mb-3">
+        <button
+          type="submit"
+          className="px-5 py-2 rounded-xl bg-blue-600 text-white font-medium shadow-md hover:bg-blue-700 hover:shadow-lg transition duration-300 mb-3"
+          onClick={() => (showForm ? setShowForm(false) : setShowForm(true))}
+        >
+          Add
+        </button>
+        <input
+          type="text"
+          placeholder="Search..."
+          className="px-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
+        />
+      </div>
       {showForm ? (
         <form onSubmit={handleSubmit}>
           <div className="space-y-4 mb-3">
@@ -256,7 +277,6 @@ function Beaches() {
                     alt="preview"
                     className="w-24 h-24 object-cover rounded border"
                   />
-                  {/* Nút xóa */}
                   <button
                     type="button"
                     onClick={() => {

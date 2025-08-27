@@ -14,6 +14,12 @@ function Otp() {
 
   const { email, case: type } = location.state || {};
   useEffect(() => {
+           if(!email) {
+            navigate("/login-account");
+            return;
+           }
+  } ,[])
+  useEffect(() => {
     if (timer <= 0) {
       setIsResendDisabled(false);
       return;
@@ -31,7 +37,6 @@ function Otp() {
       setError("OTP must be a 6-digit number");
       return;
     }
-    console.log(type);
     try {
       if (type === "forgot-pass") {
         const rs = await vefifyOtp({ otp });
