@@ -20,7 +20,7 @@ export const updateBeaches = (data, id) =>
     },
   });
 export const deleteBeache = (id) => api.delete("admin/beaches/" + id);
-export const url = "http://127.0.0.1:8000";
+export const url = process.env.REACT_APP_API_URL;
 export const loginAccout = (data) => api.post("login-account", data);
 export const accounts = () => api.get("admin/account-list");
 export const accountsStatus = (data) => api.post("admin/account-list" , data);
