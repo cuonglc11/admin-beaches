@@ -1,0 +1,19 @@
+.beach-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cột */
+    gap: 20px; /* khoảng cách giữa các card */
+    padding: 20px;
+    justify-items: center; /* căn giữa các card */
+  }
+  @media (max-width: 992px) {
+    .beach-list {
+      grid-template-columns: repeat(2, 1fr); /* Tablet: 2 card 1 hàng */
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .beach-list {
+      grid-template-columns: 1fr; /* Mobile: 1 card 1 hàng */
+    }
+  }
+  
