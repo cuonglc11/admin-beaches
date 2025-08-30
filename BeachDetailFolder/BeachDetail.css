@@ -1,0 +1,172 @@
+.beach-detail-card {
+    max-width: 700px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  .beach-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .beach-description {
+    margin: 10px 0;
+    line-height: 1.5;
+  }
+  
+  .image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin: 15px 0;
+    position: relative;
+  }
+  
+  .image-wrapper {
+    position: relative;
+  }
+  
+  .beach-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+  
+  .like-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    background: #eee;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+  }
+  
+  .like-btn:hover {
+    background: #ddd;
+  }
+  
+  .like-btn.liked {
+    background: #e0245e;
+    color: white;
+  }
+  
+  .comment-section {
+    margin-top: 20px;
+  }
+  
+  .comment-section h3 {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .comment-input {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .comment-input input {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  
+  .comment-input button {
+    padding: 6px 12px;
+    border: none;
+    background: #007bff;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .comment-input button:hover {
+    background: #0056b3;
+  }
+  
+  .comment-list li {
+    padding: 6px 0;
+    border-bottom: 1px solid #eee;
+  }
+  /* Slider container */
+.image-slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 15px auto;
+  }
+  
+  .slider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .slider-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  /* Nút mũi tên */
+  .prev-btn,
+  .next-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    z-index: 10;
+  }
+  
+  .prev-btn {
+    left: 10px;
+  }
+  
+  .next-btn {
+    right: 10px;
+  }
+  
+  /* Nếu ít hơn 3 ảnh thì vẫn grid */
+  .image-grid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .beach-image {
+    width: 48%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  
