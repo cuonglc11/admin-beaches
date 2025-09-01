@@ -23,7 +23,7 @@ function LoginAccout() {
       const role = rs?.data?.data?.role;
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      navigate("/account/home");
+      navigate("/");
       setLoading(false);
     } catch (error) {
       toast.error(error?.response?.data?.errors || []);

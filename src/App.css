@@ -211,3 +211,45 @@ body {
   transform: translateY(-20px);
   transition: opacity 300ms ease-in, transform 300ms ease-in;
 }
+@media (max-width: 768px) {
+
+  .auth-container,
+  .welcome-container {
+    padding: 30px 35px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 15px;
+    animation: none;
+    background-size: cover;
+  }
+
+  .auth-container,
+  .welcome-container {
+    padding: 25px 20px;
+    box-shadow: 0 10px 25px rgba(50, 50, 93, 0.08), 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .form h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .form input,
+  .form select {
+    font-size: 15px;
+    padding: 12px 15px;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(0, 124, 133, 0.2);
+  }
+
+  .toggle-link {
+    font-size: 13px;
+    margin-top: 15px;
+  }
+}

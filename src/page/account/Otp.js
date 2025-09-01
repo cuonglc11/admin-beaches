@@ -14,11 +14,11 @@ function Otp() {
 
   const { email, case: type } = location.state || {};
   useEffect(() => {
-           if(!email) {
-            navigate("/login-account");
-            return;
-           }
-  } ,[])
+    // if (!email) {
+    //   navigate("/login-account");
+    //   return;
+    // }
+  }, []);
   useEffect(() => {
     if (timer <= 0) {
       setIsResendDisabled(false);
@@ -32,17 +32,18 @@ function Otp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-
     if (!/^\d{6}$/.test(otp)) {
       setError("OTP must be a 6-digit number");
       return;
     }
     try {
       if (type === "forgot-pass") {
+        console.log(111111111111);
         const rs = await vefifyOtp({ otp });
         const token_otp = rs.data?.data?.token_otp;
         navigate("/reset-pass", { state: { token_otp } });
-      } else if (type === "vefify-account") {
+      } else if (type === "verify-account") {
+        console.log(222222222222);
         const rs = await vefifyAccount({ otp });
         navigate("/login-account");
       }

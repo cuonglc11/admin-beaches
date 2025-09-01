@@ -1,3 +1,4 @@
+import { data } from "react-router-dom";
 import api from "./api";
 
 export const login = (data) => api.post("login", data);
@@ -34,5 +35,45 @@ export const accountsStatus = (data) => api.post("admin/account-list", data);
 export const sentOtpPass = (data) => api.post("customer/sent-otp", data);
 export const vefifyOtp = (data) => api.post("customer/change-otp", data);
 export const vefifyPass = (data) => api.post("customer/change-password", data);
-export const registerAccount = (data) => api.post("account/change-otp", data);
+export const registerAccount = (data) =>
+  api.post("account/change-otp", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 export const vefifyAccount = (data) => api.post("account/verify-account", data);
+export const listBeachesHome = () => api.get("list-beaches");
+export const ImageBannerAdmin = () => api.get("admin/image-banner");
+export const detailBeaches = (id) => api.get("beaches?id=" + id);
+export const ImageBannerAdminAdd = (data) =>
+  api.post("admin/image-banner", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+export const ImageBannerAdminUpdate = (data, id) =>
+  api.post("admin/image-banner/" + id, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+export const ImageBanner = (type) => api.get("list-banner?type=" + type);
+export const commentApi = (data) => api.post("customer/comment" , data);
+export const commentList = (idBeaches) => api.get("list-comment?id="+idBeaches);
+export const timeAgo = (dateString) => {
+  const now = new Date();
+  const past = new Date(dateString);
+  const diffMs = now - past;
+
+  const seconds = Math.floor(diffMs / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (seconds < 60) return `${seconds} giây trước`;
+  if (minutes < 60) return `${minutes} phút trước`;
+  if (hours < 24) return `${hours} giờ trước`;
+  if (days < 30) return `${days} ngày trước`;
+  if (days < 365) return `${Math.floor(days / 30)} tháng trước`;
+  return `${Math.floor(days / 365)} năm trước`;
+}

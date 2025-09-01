@@ -6,17 +6,21 @@ import {
 } from "react-router-dom";
 import Mainlayout from "../layouts/Mainlayout";
 import Login from "../page/admin/login";
-import Home from "../page/admin/home";
+import Home from "../page/home/home";
 import Region from "../page/admin/region";
 import Beaches from "../page/admin/beaches";
 import HomeMainLayout from "../layouts/HomeMainLayout";
-import LoginAccout from "../page/home/loginAccout";
-import HomeAccount from "../page/home/home";
-import ForgotPasswordForm from "../page/home/ForgotPasswordForm";
-import Otp from "../page/home/Otp";
-import ResetPassword from "../page/home/ResetPassword";
-import Register from "../page/home/Register";
+import LoginAccout from "../page/account/loginAccout";
+import HomeAccount from "../page/account/home";
+import ForgotPasswordForm from "../page/account/ForgotPasswordForm";
+import Otp from "../page/account/Otp";
+import ResetPassword from "../page/account/ResetPassword";
+import Register from "../page/account/Register";
 import Accout from "../page/admin/accout";
+import HomeLayout from "../layouts/HomeLayout";
+import HomeAdmin from "../page/admin/HomeAdmin";
+import ImageBanner from "../page/admin/ImageBanner";
+import DetailBeaches from "../page/home/detail";
 
 const auth = () => {
   const token = localStorage.getItem("token");
@@ -45,7 +49,7 @@ const AppRouter = () => {
           element={
             <PrivateRoute>
               <Mainlayout>
-                <Home />
+                <HomeAdmin />
               </Mainlayout>
             </PrivateRoute>
           }
@@ -66,6 +70,16 @@ const AppRouter = () => {
             <PrivateRoute>
               <Mainlayout>
                 <Beaches />
+              </Mainlayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/admin/banner"
+          element={
+            <PrivateRoute>
+              <Mainlayout>
+                <ImageBanner />
               </Mainlayout>
             </PrivateRoute>
           }
@@ -128,6 +142,22 @@ const AppRouter = () => {
             <HomeMainLayout>
               <Register />
             </HomeMainLayout>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <HomeLayout>
+              <Home />
+            </HomeLayout>
+          }
+        />
+        <Route
+          path="/detail-beaches"
+          element={
+            <HomeLayout>
+              <DetailBeaches />
+            </HomeLayout>
           }
         />
       </Routes>

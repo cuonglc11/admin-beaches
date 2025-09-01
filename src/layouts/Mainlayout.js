@@ -40,6 +40,14 @@ function Mainlayout({ children }) {
             >
               Accout Management
             </button>
+            <button
+              className={`tab-btn ${
+                location.pathname === "/admin/banner" ? "active" : ""
+              }`}
+              onClick={() => navigate("/admin/banner")}
+            >
+              Banner Management
+            </button>
           </div>
           <button className="logout-btn" onClick={handleLogout}>
             Logout

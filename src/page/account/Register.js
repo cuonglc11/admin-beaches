@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { registerAccount } from "../../api/function";
 import { toast } from "react-toastify";
 
 function Register() {
-  const [formData, setFromData] = useState({
+  const [formData, setFormData] = useState({
     full_name: "",
     birthday: "",
     gender: "",
@@ -12,13 +12,41 @@ function Register() {
     phone: "",
     password: "",
     confirmPassword: "",
+    avatar: null, // file ảnh
+    avatarPreview: null, // link preview
   });
+
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
+
+  // cleanup URL khi component unmount để tránh rò rỉ bộ nhớ
+  useEffect(() => {
+    return () => {
+      if (formData.avatarPreview) {
+        URL.revokeObjectURL(formData.avatarPreview);
+      }
+    };
+  }, [formData.avatarPreview]);
+
   const handleChange = (e) => {
-    setFromData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value, files } = e.target;
+
+    if (name === "avatar" && files && files[0]) {
+      const file = files[0];
+      setFormData((prev) => ({
+        ...prev,
+        avatar: file,
+        avatarPreview: URL.createObjectURL(file),
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
+
   const validateForm = () => {
     const newErrors = {};
     const {
@@ -48,21 +76,29 @@ function Register() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
+
     setIsLoading(true);
     try {
-      const rs = await registerAccount({
-        full_name: formData.full_name,
-        username: formData.email,
-        gender: formData.gender,
-        phone: formData.phone,
-        email: formData.email,
-        password: formData.password,
-        birthday: formData.birthday,
-      });
+      const formDataToSend = new FormData();
+      formDataToSend.append("full_name", formData.full_name);
+      formDataToSend.append("username", formData.email);
+      formDataToSend.append("gender", formData.gender);
+      formDataToSend.append("phone", formData.phone);
+      formDataToSend.append("email", formData.email);
+      formDataToSend.append("password", formData.password);
+      formDataToSend.append("birthday", formData.birthday);
+      // if (formData.avatar) {
+        formDataToSend.append("image", formData.avatar);
+      // }
+
+      const rs = await registerAccount(formDataToSend);
+
       navigate("/otp", {
-        state: { email: formData.email, case: "vefify-account" },
+        state: { email: formData.email, case: "verify-account" },
       });
     } catch (error) {
       const errors = error.response?.data?.errors;
@@ -173,6 +209,26 @@ function Register() {
           <p className="error-message">{errors.confirmPassword}</p>
         )}
       </div>
+      <div className="form-group">
+        <label htmlFor="avatar">Avatar:</label>
+        <input
+          id="avatar"
+          name="avatar"
+          type="file"
+          accept="image/*"
+          onChange={handleChange}
+        />
+        {errors.avatar && <p className="error-message">{errors.avatar}</p>}
+        {formData.avatarPreview && (
+          <div className="mt-3">
+            <img
+              src={formData.avatarPreview}
+              alt="Preview Avatar"
+              className="w-24 h-24 object-cover rounded-full border shadow"
+            />
+          </div>
+        )}
+      </div>
 
       {errors.api && (
         <p className="error-message" style={{ textAlign: "center" }}>
@@ -181,7 +237,7 @@ function Register() {
       )}
 
       <button type="submit" className="submit-btn" disabled={isLoading}>
-        Register
+        {isLoading ? "Loading..." : "Register"}
       </button>
     </form>
   );
