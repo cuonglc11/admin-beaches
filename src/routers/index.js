@@ -153,10 +153,25 @@ const AppRouter = () => {
           }
         />
         <Route
-          path="/detail-beaches"
+          path="/detail-beaches/:id"
           element={
             <HomeLayout>
               <DetailBeaches />
+            </HomeLayout>
+          }
+        />
+        <Route
+          path="*"
+          element={
+            <HomeLayout>
+              <div className="text-center py-20">
+                <h1 className="text-4xl font-bold mb-4">
+                  404 - Page Not Found
+                </h1>
+                <p className="text-gray-600">
+                  The page you are looking for does not exist.
+                </p>
+              </div>{" "}
             </HomeLayout>
           }
         />

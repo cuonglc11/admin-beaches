@@ -81,8 +81,8 @@ function Home() {
       } catch (error) {}
     }
   };
-  const detailBeaches = (value , beaches) => {
-    navigate("/detail-beaches", { state: { beaches: beaches } });
+  const detailBeaches = (value, beaches) => {
+    navigate("/detail-beaches/" + beaches.id);
   };
   return (
     <>
@@ -123,7 +123,7 @@ function Home() {
                 </div>
 
                 <div className="flex-1 p-5 flex flex-col justify-between">
-                  <div onClick={() => detailBeaches(b.id , b)}>
+                  <div onClick={() => detailBeaches(b.id, b)}>
                     <h3 className="text-lg font-bold text-gray-800 mb-2">
                       {b.name}
                     </h3>

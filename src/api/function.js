@@ -85,5 +85,5 @@ export const favoritesDelete = (idBeache) =>
   api.delete("customer/favorites?beach_id=" + idBeache);
 export const favoritesCheck = (idBeache) =>
   api.get("customer/check-favorites?beach_id=" + idBeache);
-export const listBeachesRegion = (id, region) =>
-  api.get("list-beaches-region?id=" + id + "&region=" + region);
+export const listBeachesRegion = (id) =>
+  api.get("list-beaches-region?id=" + id );

@@ -78,7 +78,7 @@ function CommentSection({ idBeaches }) {
 
   useEffect(() => {
     fetchDataComment();
-  }, []);
+  }, [idBeaches]);
 
   const fetchDataComment = async () => {
     try {
@@ -101,11 +101,11 @@ function CommentSection({ idBeaches }) {
 
   return (
     <div className="w-full px-4">
-      {localStorage.getItem('token') && localStorage.getItem('role') == 2 ? (
-          <section className="mb-8 w-full">
-        <h2 className="text-xl font-bold mb-3">Share your comment</h2>
-        <CommentForm onAddComment={handleAddComment} />
-      </section>
+      {localStorage.getItem("token") && localStorage.getItem("role") == 2 ? (
+        <section className="mb-8 w-full">
+          <h2 className="text-xl font-bold mb-3">Share your comment</h2>
+          <CommentForm onAddComment={handleAddComment} />
+        </section>
       ) : null}
       <section className="w-full">
         <h2 className="text-xl font-bold mb-3">Comments</h2>

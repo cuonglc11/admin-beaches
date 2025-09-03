@@ -1,46 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { listBeachesRegion, url } from "../../api/function";
+import { useNavigate } from "react-router-dom";
 
-const Sidebar = ({ beach }) => {
-  const nearbyBeaches = [
-    {
-      name: "Bãi biển Non Nước",
-      location: "Cách 5km về phía Nam",
-      image: "https://picsum.photos/id/1015/100/70",
-    },
-    {
-      name: "Bãi Rạng - Sơn Trà",
-      location: "Cách 8km về phía Bắc",
-      image: "https://picsum.photos/id/1016/100/70",
-    },
-    {
-      name: "Bãi biển Lăng Cô",
-      location: "Cách 25km (Qua đèo Hải Vân)",
-      image: "https://picsum.photos/id/1018/100/70",
-    },
-  ];
+const Sidebar = ({ id }) => {
   const [listBeaches, setListBeaches] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
+    window.scrollTo(0, 0);
     fechData();
-  }, []);
+  }, [id]);
   const fechData = async () => {
+    console.log(id);
     try {
-      const rs = await listBeachesRegion(beach.id, beach.region_id);
-      console.log(rs?.data?.data);
+      const rs = await listBeachesRegion(id);
+      // console.log(rs);
       setListBeaches(rs?.data?.data || []);
     } catch (error) {}
   };
-  const detailBeaches = (value) => {};
+  const detailBeaches = (value) => {
+    // console.log(value);
+    navigate("/detail-beaches/" + value.id);
+  };
 
   return (
     <aside className="sidebar">
       <h2 className="section-title">Nearby Beaches</h2>
       <div className="nearby-list">
         {listBeaches.map((beach) => (
-          <a
-            href="#"
+          <div
             onClick={() => detailBeaches(beach)}
-            className="nearby-item"
+            className="nearby-item  cursor-pointer"
             key={beach.name}
           >
             <img
@@ -52,7 +42,7 @@ const Sidebar = ({ beach }) => {
               <h3 className="nearby-item__name">{beach.name}</h3>
               <p className="nearby-item__location">{beach.location}</p>
             </div>
-          </a>
+          </div>
         ))}
       </div>
     </aside>

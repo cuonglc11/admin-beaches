@@ -1,15 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { detailBeaches, url } from "../../api/function";
 import "./Slider.css";
+import { useNavigate } from "react-router-dom";
 
-function Slider({ id, beachTitle, beachDescription }) {
+function Slider({ id }) {
   const [slides, setSlides] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDataImage = async () => {
       if (id) {
         try {
           const rs = await detailBeaches(id);
+          if (rs?.data?.data === null) {
+            navigate("/this-page-does-not-exist");
+          }
+
           const images = rs?.data?.data?.images || [];
           const formattedSlides = images.map((img) => ({
             id: img.id,
@@ -68,10 +74,10 @@ function Slider({ id, beachTitle, beachDescription }) {
         className="slider__main-image"
         style={{ backgroundImage: `url(${url}${activeSlide?.image})` }}
       >
-        <div className="slider__content">
+        {/* <div className="slider__content">
           <h2 className="slider__title">{beachTitle}</h2>
           <p className="slider__description">{beachDescription}</p>
-        </div>
+        </div> */}
       </div>
 
       <div className={thumbnailContainerClass}>
