@@ -21,8 +21,12 @@ function LoginAccout() {
       const rs = await loginAccout(formData);
       const token = rs?.data?.data?.token;
       const role = rs?.data?.data?.role;
+      const user = rs?.data?.data?.account;
+
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
+      localStorage.setItem("user", user);
+
       navigate("/");
       setLoading(false);
     } catch (error) {

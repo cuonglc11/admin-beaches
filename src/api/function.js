@@ -58,8 +58,10 @@ export const ImageBannerAdminUpdate = (data, id) =>
     },
   });
 export const ImageBanner = (type) => api.get("list-banner?type=" + type);
-export const commentApi = (data) => api.post("customer/comment" , data);
-export const commentList = (idBeaches) => api.get("list-comment?id="+idBeaches);
+export const commentApi = (data) => api.post("customer/comment", data);
+export const commentList = (idBeaches) =>
+  api.get("list-comment?id=" + idBeaches);
+export const commentListHome = () => api.get("list-comment");
 export const timeAgo = (dateString) => {
   const now = new Date();
   const past = new Date(dateString);
@@ -70,10 +72,18 @@ export const timeAgo = (dateString) => {
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
 
-  if (seconds < 60) return `${seconds} giây trước`;
-  if (minutes < 60) return `${minutes} phút trước`;
-  if (hours < 24) return `${hours} giờ trước`;
-  if (days < 30) return `${days} ngày trước`;
-  if (days < 365) return `${Math.floor(days / 30)} tháng trước`;
-  return `${Math.floor(days / 365)} năm trước`;
-}
+  if (seconds < 60) return `${seconds} seconds ago`;
+  if (minutes < 60) return `${minutes} minutes ago`;
+  if (hours < 24) return `${hours} hours ago`;
+  if (days < 30) return `${days} days ago`;
+  if (days < 365) return `${Math.floor(days / 30)} months ago`;
+  return `${Math.floor(days / 365)} years ago`;
+};
+export const favoritesAdd = (idBeache) =>
+  api.post("customer/favorites", { beach_id: idBeache });
+export const favoritesDelete = (idBeache) =>
+  api.delete("customer/favorites?beach_id=" + idBeache);
+export const favoritesCheck = (idBeache) =>
+  api.get("customer/check-favorites?beach_id=" + idBeache);
+export const listBeachesRegion = (id, region) =>
+  api.get("list-beaches-region?id=" + id + "&region=" + region);

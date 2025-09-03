@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { listBeachesRegion, url } from "../../api/function";
 
-const Sidebar = () => {
+const Sidebar = ({ beach }) => {
   const nearbyBeaches = [
     {
       name: "Bãi biển Non Nước",
@@ -18,15 +19,32 @@ const Sidebar = () => {
       image: "https://picsum.photos/id/1018/100/70",
     },
   ];
+  const [listBeaches, setListBeaches] = useState([]);
+  useEffect(() => {
+    fechData();
+  }, []);
+  const fechData = async () => {
+    try {
+      const rs = await listBeachesRegion(beach.id, beach.region_id);
+      console.log(rs?.data?.data);
+      setListBeaches(rs?.data?.data || []);
+    } catch (error) {}
+  };
+  const detailBeaches = (value) => {};
 
   return (
     <aside className="sidebar">
       <h2 className="section-title">Nearby Beaches</h2>
       <div className="nearby-list">
-        {nearbyBeaches.map((beach) => (
-          <a href="#" className="nearby-item" key={beach.name}>
+        {listBeaches.map((beach) => (
+          <a
+            href="#"
+            onClick={() => detailBeaches(beach)}
+            className="nearby-item"
+            key={beach.name}
+          >
             <img
-              src={beach.image}
+              src={url + "" + beach.images[0].img_link}
               alt={beach.name}
               className="nearby-item__image"
             />

@@ -71,11 +71,16 @@ function Navbar() {
         </Link>
       ) : (
         <div className="hidden md:flex items-center gap-3">
-          <span className="font-medium text-gray-700">Hello, Admin</span>
+          <span className="font-medium text-gray-700">
+            Hello, {localStorage.getItem("user")}
+          </span>
           <button
             onClick={() => {
               localStorage.removeItem("token");
               localStorage.removeItem("role");
+              localStorage.removeItem("user");
+
+              window.location.reload();
             }}
             className="px-3 py-1 rounded-full bg-red-500 text-white 
                  hover:bg-red-600 transition-all duration-300"

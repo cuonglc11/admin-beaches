@@ -6,14 +6,18 @@ import CommentSection from "../../../components/detalBeaches/CommentSection";
 import Sidebar from "../../../components/detalBeaches/Sidebar";
 function DetailBeaches() {
   const location = useLocation();
-  const { id } = location.state || {};
+  const { beaches } = location.state || {};
   return (
     <>
-      <Slider id={id} />
+      <Slider
+        id={beaches.id}
+        beachTitle={beaches.name}
+        beachDescription={beaches.description}
+      />
       <div className="page-content">
         <div className="content-layout">
-          <CommentSection idBeaches={id} />
-          <Sidebar />
+          <CommentSection idBeaches={beaches.id} />
+          <Sidebar beach={beaches} />
         </div>
       </div>
     </>
