@@ -21,6 +21,9 @@ import HomeLayout from "../layouts/HomeLayout";
 import HomeAdmin from "../page/admin/HomeAdmin";
 import ImageBanner from "../page/admin/ImageBanner";
 import DetailBeaches from "../page/home/detail";
+import Comment from "../page/admin/Comment";
+import RegionBeaches from "../page/home/region/Region";
+import SeachBeaches from "../page/home/seachBeache/SeachBeaches";
 
 const auth = () => {
   const token = localStorage.getItem("token");
@@ -95,6 +98,16 @@ const AppRouter = () => {
           }
         />
         <Route
+          path="/admin/comment"
+          element={
+            <PrivateRoute>
+              <Mainlayout>
+                <Comment />
+              </Mainlayout>
+            </PrivateRoute>
+          }
+        />
+        <Route
           path="/login-account"
           element={
             <HomeMainLayout>
@@ -157,6 +170,22 @@ const AppRouter = () => {
           element={
             <HomeLayout>
               <DetailBeaches />
+            </HomeLayout>
+          }
+        />
+        <Route
+          path="/region"
+          element={
+            <HomeLayout>
+              <RegionBeaches />
+            </HomeLayout>
+          }
+        />
+        <Route
+          path="/seach-beaches/:keyword"
+          element={
+            <HomeLayout>
+              <SeachBeaches />
             </HomeLayout>
           }
         />

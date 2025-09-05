@@ -36,8 +36,7 @@ function Experience() {
           transition={{ duration: 1 }}
           className="w-full h-80 object-cover"
         />
-        {/* Nút điều khiển */}
-        <div className="absolute inset-0 flex justify-between items-center px-4">
+         <div className="absolute inset-0 flex justify-between items-center px-4">
           <button
             onClick={() =>
               setCurrent(current === 0 ? images.length - 1 : current - 1)

@@ -44,6 +44,9 @@ export const registerAccount = (data) =>
 export const vefifyAccount = (data) => api.post("account/verify-account", data);
 export const listBeachesHome = () => api.get("list-beaches");
 export const ImageBannerAdmin = () => api.get("admin/image-banner");
+export const commentManage = () => api.get("admin/comment");
+export const commentUpdate = (data) => api.post("admin/comment", data);
+
 export const detailBeaches = (id) => api.get("beaches?id=" + id);
 export const ImageBannerAdminAdd = (data) =>
   api.post("admin/image-banner", data, {
@@ -86,4 +89,19 @@ export const favoritesDelete = (idBeache) =>
 export const favoritesCheck = (idBeache) =>
   api.get("customer/check-favorites?beach_id=" + idBeache);
 export const listBeachesRegion = (id) =>
-  api.get("list-beaches-region?id=" + id );
+  api.get("list-beaches-region?id=" + id);
+export const listRegion = () => api.get("list-regions");
+export const listRegionBeaches = (id) => {
+  if (id != null) {
+    return api.get(`list-beaches?region=${id}`);
+  } else {
+    return api.get("list-beaches");
+  }
+};
+export const listRegionBeachesKeyword = (keyword) => {
+  if (keyword != null) {
+    return api.get(`list-beaches?keyword=${keyword}`);
+  } else {
+    return api.get("list-beaches");
+  }
+};

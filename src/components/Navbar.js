@@ -1,14 +1,16 @@
 import React, { useContext, useState } from "react";
 import { FaBars } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { menuData } from "./data";
 import { FiLogIn } from "react-icons/fi";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
   const handleSearch = () => {
-    console.log(111111111);
+    // console.log(111111111);
+    navigate("/seach-beaches/" + inputValue);
   };
   return (
     <nav className="navbar">
