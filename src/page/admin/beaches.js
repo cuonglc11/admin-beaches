@@ -26,8 +26,9 @@ function Beaches() {
     description: "",
     location: "",
     id: null,
-
     region_id: "",
+    latitude: "",
+    longitude: "",
     images: [],
   });
   const handleEditorChange = (content) => {
@@ -66,6 +67,9 @@ function Beaches() {
     data.append("description", formData.description);
     data.append("region_id", formData.region_id);
     data.append("location", formData.location);
+    data.append("longitude", formData.longitude);
+    data.append("latitude", formData.latitude);
+
     try {
       const method = formData.id !== null ? "PUT" : "POST";
       let rs;
@@ -84,6 +88,8 @@ function Beaches() {
         location: "",
         id: null,
         region_id: "",
+        latitude: "",
+        longitude: "",
         images: [],
       });
       setShowForm(false);
@@ -192,6 +198,30 @@ function Beaches() {
                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
                disabled:bg-gray-100 disabled:cursor-not-allowed"
               value={formData.location}
+              onChange={handleChange}
+              required
+              disabled={isLoading}
+            />
+            <input
+              type="text"
+              name="longitude"
+              placeholder="Longitude"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm
+               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+               disabled:bg-gray-100 disabled:cursor-not-allowed"
+              value={formData.longitude}
+              onChange={handleChange}
+              required
+              disabled={isLoading}
+            />
+            <input
+              type="text"
+              name="latitude"
+              placeholder="Latitude"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm
+               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500
+               disabled:bg-gray-100 disabled:cursor-not-allowed"
+              value={formData.latitude}
               onChange={handleChange}
               required
               disabled={isLoading}
@@ -313,6 +343,8 @@ function Beaches() {
             <th>Name</th>
             <th>Location</th>
             <th>Region</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
             <th>Description</th>
             <th>Images</th>
 
@@ -325,6 +357,9 @@ function Beaches() {
               <td>{item.name}</td>
               <td>{item.location}</td>
               <td>{item.region.name}</td>
+              <td>{item.latitude}</td>
+              <td>{item.longitude}</td>
+
               <td>
                 <div
                   className="max-w-xs overflow-hidden text-ellipsis line-clamp-3"

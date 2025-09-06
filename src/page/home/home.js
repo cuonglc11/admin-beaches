@@ -3,7 +3,7 @@ import Hero from "../../components/Hero";
 import { motion } from "framer-motion";
 import Experience from "../../components/Experience";
 import Testimonial from "../../components/Review";
-import { FaHeart, FaRegComment } from "react-icons/fa";
+import { FaHeart, FaRegComment, FaMapMarkerAlt } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
@@ -28,6 +28,10 @@ function Home() {
   const [favoritesState, setFavoritesState] = useState({});
   const [favoritesCount, setFavoritesCount] = useState({});
 
+  // Modal state
+  const [mapModalOpen, setMapModalOpen] = useState(false);
+  const [mapCoords, setMapCoords] = useState({ lat: null, lng: null });
+
   useEffect(() => {
     fectData();
     fectDataImageBe();
@@ -43,7 +47,7 @@ function Home() {
       const favCount = {};
 
       for (let b of list) {
-        favCount[b.id] = b.favorites_count; 
+        favCount[b.id] = b.favorites_count;
 
         if (localStorage.getItem("token") && localStorage.getItem("user")) {
           try {
@@ -102,7 +106,6 @@ function Home() {
       }
     } catch (error) {
       toast.error("Có lỗi xảy ra, rollback!");
-      // rollback về state cũ nếu lỗi
       setFavoritesState(favoritesState);
       setFavoritesCount(favoritesCount);
     }
@@ -110,6 +113,12 @@ function Home() {
 
   const detailBeaches = (value, beaches) => {
     navigate("/detail-beaches/" + beaches.id);
+  };
+
+  // Mở modal map
+  const openMapModal = (lat, lng) => {
+    setMapCoords({ lat, lng });
+    setMapModalOpen(true);
   };
 
   return (
@@ -185,6 +194,15 @@ function Home() {
                         </>
                       )}
                     </button>
+                    {b.latitude && b.longitude && (
+                      <button
+                        onClick={() => openMapModal(b.latitude, b.longitude)}
+                        className="flex items-center gap-2 text-green-600 hover:text-green-800 transition"
+                      >
+                        <FaMapMarkerAlt />
+                        <span>Map</span>
+                      </button>
+                    )}
                     <button className="flex items-center gap-2 hover:text-blue-500 transition">
                       <FaRegComment className="text-lg" />
                       <span>{b.comments_count}</span>
@@ -196,9 +214,32 @@ function Home() {
           ))}
         </Swiper>
       </section>
-
       <Experience />
       <Testimonial />
+
+      {/* Modal Map */}
+      {mapModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-2xl shadow-lg w-11/12 md:w-3/4 lg:w-1/2 relative">
+            <button
+              onClick={() => setMapModalOpen(false)}
+              className="absolute top-2 right-2 bg-red-500 text-white rounded-full px-3 py-1 text-sm"
+            >
+              ✕
+            </button>
+            <div className="p-4">
+              <iframe
+                src={`https://www.google.com/maps?q=${mapCoords.lat},${mapCoords.lng}&hl=es;z=14&output=embed`}
+                width="100%"
+                height="400"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
