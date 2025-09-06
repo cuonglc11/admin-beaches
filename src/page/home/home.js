@@ -9,6 +9,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import DOMPurify from "dompurify";
 import { toast } from "react-toastify";
 import {
   ImageBanner,
@@ -120,7 +121,13 @@ function Home() {
     setMapCoords({ lat, lng });
     setMapModalOpen(true);
   };
-
+  const truncateHTML = (html, maxLength = 100) => {
+    const text = new DOMParser().parseFromString(html, "text/html").body
+      .textContent;
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
+  };
   return (
     <>
       <Hero />
@@ -166,7 +173,11 @@ function Home() {
                     </h3>
                     <div
                       className="text-gray-600 text-sm mb-4"
-                      dangerouslySetInnerHTML={{ __html: b.description }}
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(
+                          truncateHTML(b.description, 120)
+                        ),
+                      }}
                     />
                   </div>
 

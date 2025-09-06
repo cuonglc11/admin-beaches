@@ -5,12 +5,12 @@ const ROBOT_ICON_URL = "./chat.png";
 
 const Chatbot = () => {
   const N8N_WEBHOOK_URL =
-    "https://b50e93d6c867.ngrok-free.app/webhook/dd2cc16b-22c3-403e-a487-3c98dad2c66a";
+    "https://76b4af9ca547.ngrok-free.app/webhook/dd2cc16b-22c3-403e-a487-3c98dad2c66a";
 
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
-      text: "Xin chào! Tôi là Nàng thơ bãi biển, tôi có thể giúp gì cho bạn?",
+      text: "Xin chào! Tôi có thể giúp gì cho bạn?",
       sender: "ai",
     },
   ]);

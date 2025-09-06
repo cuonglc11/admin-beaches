@@ -3,33 +3,11 @@ import { detailBeaches, url } from "../../api/function";
 import "./Slider.css";
 import { useNavigate } from "react-router-dom";
 
-function Slider({ id }) {
+function Slider({ slide }) {
   const [slides, setSlides] = useState([]);
-  const navigate = useNavigate();
-
   useEffect(() => {
-    const fetchDataImage = async () => {
-      if (id) {
-        try {
-          const rs = await detailBeaches(id);
-          if (rs?.data?.data === null) {
-            navigate("/this-page-does-not-exist");
-          }
-
-          const images = rs?.data?.data?.images || [];
-          const formattedSlides = images.map((img) => ({
-            id: img.id,
-            image: img.img_link,
-          }));
-          setSlides(formattedSlides);
-        } catch (error) {
-          console.error("Failed to fetch slider images:", error);
-          setSlides([]);
-        }
-      }
-    };
-    fetchDataImage();
-  }, [id]);
+    setSlides(slide);
+  }, [slide]);
 
   const handleNext = () => {
     if (slides.length <= 1) return;
@@ -73,12 +51,7 @@ function Slider({ id }) {
       <div
         className="slider__main-image"
         style={{ backgroundImage: `url(${url}${activeSlide?.image})` }}
-      >
-        {/* <div className="slider__content">
-          <h2 className="slider__title">{beachTitle}</h2>
-          <p className="slider__description">{beachDescription}</p>
-        </div> */}
-      </div>
+      />
 
       <div className={thumbnailContainerClass}>
         {thumbnailSlides.map((slide) => (
