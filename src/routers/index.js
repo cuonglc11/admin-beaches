@@ -174,7 +174,7 @@ const AppRouter = () => {
           }
         />
         <Route
-          path="/region"
+          path="/region/:id"
           element={
             <HomeLayout>
               <RegionBeaches />

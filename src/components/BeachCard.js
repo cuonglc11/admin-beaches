@@ -3,6 +3,7 @@ import "./style/BeachCard.css";
 import { url } from "../api/function";
 import { useNavigate } from "react-router-dom";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import DOMPurify from "dompurify";
 
 function BeachCard({ beach }) {
   const thumbnail =
@@ -10,8 +11,13 @@ function BeachCard({ beach }) {
       ? url + "" + beach.images[0].img_link
       : "default.jpg";
   const navigate = useNavigate();
-
-  // modal map state
+  const truncateHTML = (html, maxLength = 100) => {
+    const text = new DOMParser().parseFromString(html, "text/html").body
+      .textContent;
+    return text.length > maxLength
+      ? text.substring(0, maxLength) + "..."
+      : text;
+  };
   const [mapModalOpen, setMapModalOpen] = useState(false);
 
   return (
@@ -29,9 +35,12 @@ function BeachCard({ beach }) {
         <p>
           <b>Regions:</b> {beach.region.name}
         </p>
-        <div dangerouslySetInnerHTML={{ __html: beach.description }} />
+        <div
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(truncateHTML(beach.description, 120)),
+          }}
+        />
 
-        {/* Nút mở bản đồ nếu có tọa độ */}
         {beach.latitude && beach.longitude && (
           <button className="map-btn" onClick={() => setMapModalOpen(true)}>
             <FaMapMarkerAlt /> Map

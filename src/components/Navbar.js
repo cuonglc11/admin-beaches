@@ -1,96 +1,192 @@
-import React, { useContext, useState } from "react";
-import { FaBars } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { menuData } from "./data";
-import { FiLogIn } from "react-icons/fi";
+import { FaBars } from "react-icons/fa";
+import { listRegion } from "../api/function";
 
 function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const navigate = useNavigate();
-  const handleSearch = () => {
-    // console.log(111111111);
-    navigate("/seach-beaches/" + inputValue);
-  };
-  return (
-    <nav className="navbar">
-      <div className="navbar-logo">
-        <span className="logo-icon">🌴</span>
-        <span className="logo-text">SeaView</span>
-      </div>
-      <button className="navbar-toggle" onClick={() => setMenuOpen(!menuOpen)}>
-        <FaBars />
-      </button>
-      <ul className={`navbar-links ${menuOpen ? "active" : ""} gap-4`}>
-        {menuData.map((item, key) => (
-          <li key={key}>
-            <Link to={item.to}>{item.titile}</Link>
-          </li>
-        ))}
-        <li className="md:hidden">
-          {!localStorage.getItem("token") &&
-          !localStorage.getItem("role") &&
-          localStorage.getItem("role") != 2 ? (
-            <Link
-              to="/login-account"
-              className="block w-full px-4 py-2 rounded-full 
-             bg-gradient-to-r from-cyan-500 to-blue-600 
-             text-white font-semibold 
-             shadow-lg hover:from-cyan-600 hover:to-blue-700 
-             active:scale-95 transition-all duration-300 ease-in-out
-             flex items-center justify-center gap-2"
-            >
-              <FiLogIn className="text-lg" />
-              <span className="drop-shadow-md">Login</span>
-            </Link>
-          ) : (
-            <div></div>
-          )}
-        </li>
-      </ul>
-      <div className="navbar-search">
-        <input
-          type="text"
-          placeholder="Search for beach..."
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        />
-        <button onClick={handleSearch}>Tìm</button>
-      </div>
-      {!localStorage.getItem("token") &&
-      !localStorage.getItem("role") &&
-      localStorage.getItem("role") != 2 ? (
-        <Link
-          to="/login-account"
-          className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full 
-             bg-gradient-to-r from-blue-500 to-indigo-600 
-             text-white font-medium shadow-md 
-             hover:from-blue-600 hover:to-indigo-700 
-             transition-all duration-300 ease-in-out"
-        >
-          <FiLogIn className="text-lg" />
-          <span>Login</span>
-        </Link>
-      ) : (
-        <div className="hidden md:flex items-center gap-3">
-          <span className="font-medium text-gray-700">
-            Hello, {localStorage.getItem("user")}
-          </span>
-          <button
-            onClick={() => {
-              localStorage.removeItem("token");
-              localStorage.removeItem("role");
-              localStorage.removeItem("user");
 
-              window.location.reload();
-            }}
-            className="px-3 py-1 rounded-full bg-red-500 text-white 
-                 hover:bg-red-600 transition-all duration-300"
+  const [regions, setRegions] = useState([]);
+  useEffect(() => {
+    fetchDataRegion();
+  }, []);
+  const fetchDataRegion = async () => {
+    try {
+      const rs = await listRegion();
+      setRegions(rs.data?.data || []);
+    } catch (error) {}
+  };
+  const handleSearch = () => {
+    console.log("Search:", inputValue);
+  };
+
+  const handleSelectRegion = (regionId) => {
+    navigate(`/region/${regionId}`);
+    setMenuOpen(false);
+    setDropdownOpen(false);
+  };
+
+  return (
+    <nav className="bg-white shadow-md px-4 md:px-6 py-3">
+      <div className="flex items-center justify-between">
+        {/* LEFT */}
+        <div className="flex items-center">
+          <div className="flex items-center text-lg md:text-xl font-bold text-blue-600">
+            🌴 SeaView
+          </div>
+          <button
+            className="ml-4 text-2xl lg:hidden"
+            onClick={() => setMenuOpen(!menuOpen)}
           >
-            Logout
+            <FaBars />
           </button>
         </div>
-      )}
+
+        <div className="hidden lg:flex items-center space-x-8">
+          {/* Menu */}
+          <ul className="flex space-x-6 font-medium">
+            <li>
+              <Link to="/" className="hover:text-blue-600">
+                Home
+              </Link>
+            </li>
+            <li className="relative">
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="hover:text-blue-600 flex items-center"
+              >
+                Region ▾
+              </button>
+              {dropdownOpen && (
+                <ul className="absolute left-0 mt-2 w-40 bg-white border rounded shadow-lg z-50">
+                  <li
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleSelectRegion("all")}
+                  >
+                    All
+                  </li>
+                  {regions.map((r) => (
+                    <li
+                      key={r.id}
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleSelectRegion(r.id)}
+                    >
+                      {r.name}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+            <li>
+              <Link to="/featured" className="hover:text-blue-600">
+                Featured Beaches
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-blue-600">
+                Contact
+              </Link>
+            </li>
+          </ul>
+
+          <div className="flex items-center space-x-6">
+            <div className="text-gray-600">
+              📞 <span className="font-medium">0 (800) 123-456</span>
+            </div>
+            <div className="flex border rounded overflow-hidden">
+              <input
+                type="text"
+                placeholder="Search beaches..."
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                className="px-3 py-1 outline-none"
+              />
+              <button
+                onClick={handleSearch}
+                className="bg-blue-600 text-white px-4 hover:bg-blue-700"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* MOBILE MENU */}
+      <div className={`${menuOpen ? "block" : "hidden"} lg:hidden mt-3`}>
+        <ul className="space-y-2 font-medium border-t pt-2">
+          <li>
+            <Link to="/" className="block px-4 py-2 hover:text-blue-600">
+              Home
+            </Link>
+          </li>
+          <li className="relative">
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="block w-full text-left px-4 py-2 hover:text-blue-600"
+            >
+              Region ▾
+            </button>
+            {dropdownOpen && (
+              <ul className="ml-4 mt-1 space-y-1 border-l pl-2">
+                <li
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => handleSelectRegion("all")}
+                >
+                  All
+                </li>
+                {regions.map((r) => (
+                  <li
+                    key={r.id}
+                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => handleSelectRegion(r.id)}
+                  >
+                    {r.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+          <li>
+            <Link
+              to="/featured"
+              className="block px-4 py-2 hover:text-blue-600"
+            >
+              Featured Beaches
+            </Link>
+          </li>
+          <li>
+            <Link to="/contact" className="block px-4 py-2 hover:text-blue-600">
+              Contact
+            </Link>
+          </li>
+        </ul>
+
+        {/* Phone + Search (mobile) */}
+        <div className="mt-4 space-y-2">
+          <div className="text-gray-600 px-4">
+            📞 <span className="font-medium">0 (800) 123-456</span>
+          </div>
+          <div className="flex border rounded overflow-hidden mx-4">
+            <input
+              type="text"
+              placeholder="Search beaches..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              className="px-3 py-1 outline-none flex-1 text-sm"
+            />
+            <button
+              onClick={handleSearch}
+              className="bg-blue-600 text-white px-4 hover:bg-blue-700"
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
     </nav>
   );
 }
