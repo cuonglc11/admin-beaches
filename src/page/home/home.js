@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Hero from "../../components/Hero";
 import { motion } from "framer-motion";
 import Experience from "../../components/Experience";
@@ -18,6 +18,8 @@ import {
   favoritesDelete,
   listBeachesHome,
   url,
+  visitAdd,
+  visitTotal,
 } from "../../api/function";
 import { useNavigate } from "react-router-dom";
 
@@ -28,15 +30,38 @@ function Home() {
 
   const [favoritesState, setFavoritesState] = useState({});
   const [favoritesCount, setFavoritesCount] = useState({});
-
   // Modal state
   const [mapModalOpen, setMapModalOpen] = useState(false);
   const [mapCoords, setMapCoords] = useState({ lat: null, lng: null });
+  const visitedRef = useRef(false);
 
   useEffect(() => {
-    fectData();
-    fectDataImageBe();
+    // visitAdds();
+    if (!visitedRef.current) {
+      visitAdds();
+      fectDataImageBe();
+      fectData();
+      visit();
+      visitedRef.current = true;
+    }
   }, []);
+  const visitAdds = async () => {
+    if (sessionStorage.getItem("visited")) return;
+    try {
+      const rs = await visitAdd();
+      console.log(rs);
+      sessionStorage.setItem("visited", "true");
+    } catch (error) {}
+  };
+  const [stats, setStats] = useState({});
+
+  const visit = async () => {
+    try {
+      const rs = await visitTotal();
+      console.log(rs?.data);
+      setStats(rs?.data);
+    } catch (error) {}
+  };
 
   const fectData = async () => {
     try {
@@ -131,6 +156,28 @@ function Home() {
   return (
     <>
       <Hero />
+      <section className="py-8 bg-gray-100 text-center">
+        <h2 className="text-2xl font-bold mb-4">📊 Visit statistics</h2>
+        <div className="flex flex-wrap justify-center gap-6">
+          <div className="bg-white rounded-2xl shadow p-4 w-40">
+            <p className="text-gray-500">Today</p>
+            <p className="text-xl font-bold">{stats.today}</p>
+          </div>
+          <div className="bg-white rounded-2xl shadow p-4 w-40">
+            <p className="text-gray-500">Week</p>
+            <p className="text-xl font-bold">{stats.week}</p>
+          </div>
+          <div className="bg-white rounded-2xl shadow p-4 w-40">
+            <p className="text-gray-500">Month</p>
+            <p className="text-xl font-bold">{stats.month}</p>
+          </div>
+          <div className="bg-white rounded-2xl shadow p-4 w-40">
+            <p className="text-gray-500">Total</p>
+            <p className="text-xl font-bold">{stats.total}</p>
+          </div>
+        </div>
+      </section>
+
       <section className="py-12 px-6 text-center">
         <h2 className="text-3xl font-bold mb-4">
           Discover Featured Destinations

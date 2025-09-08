@@ -106,3 +106,5 @@ export const listRegionBeachesKeyword = (keyword) => {
     return api.get("list-beaches");
   }
 };
+export const visitAdd = () => api.post("visit");
+export const visitTotal = () => api.get("visit");
