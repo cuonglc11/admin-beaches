@@ -98,6 +98,7 @@ export const listRegionBeaches = (id) => {
     return api.get("list-beaches");
   }
 };
+export const favorites = () => api.get("customer/favorites");
 export const listRegionBeachesKeyword = (keyword) => {
   if (keyword != null) {
     return api.get(`list-beaches?keyword=${keyword}`);

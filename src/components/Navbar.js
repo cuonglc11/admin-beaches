@@ -35,7 +35,7 @@ function Navbar() {
   }, []);
 
   const handleSearch = () => {
-    navigate("/seach-beaches/"+inputValue);
+    navigate("/seach-beaches/" + inputValue);
   };
 
   const handleSelectRegion = (regionId) => {
@@ -104,7 +104,7 @@ function Navbar() {
               )}
             </li>
             <li>
-              <Link to="/featured" className="hover:text-blue-600">
+              <Link to="/favorite" className="hover:text-blue-600">
                 Featured Beaches
               </Link>
             </li>

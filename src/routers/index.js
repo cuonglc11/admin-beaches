@@ -24,6 +24,7 @@ import DetailBeaches from "../page/home/detail";
 import Comment from "../page/admin/Comment";
 import RegionBeaches from "../page/home/region/Region";
 import SeachBeaches from "../page/home/seachBeache/SeachBeaches";
+import Favorites from "../page/home/favorites/Favorites";
 
 const auth = () => {
   const token = localStorage.getItem("token");
@@ -55,6 +56,16 @@ const AppRouter = () => {
                 <HomeAdmin />
               </Mainlayout>
             </PrivateRoute>
+          }
+        />
+        <Route
+          path="/favorite"
+          element={
+            <PrivateAccountRoute>
+              <HomeLayout>
+                <Favorites />
+              </HomeLayout>
+            </PrivateAccountRoute>
           }
         />
         <Route

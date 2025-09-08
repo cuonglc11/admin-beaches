@@ -5,7 +5,7 @@ const ROBOT_ICON_URL = "./chat.png";
 
 const Chatbot = () => {
   const N8N_WEBHOOK_URL =
-    "https://76b4af9ca547.ngrok-free.app/webhook/dd2cc16b-22c3-403e-a487-3c98dad2c66a";
+    "https://7c539b32903a.ngrok-free.app/webhook/dd2cc16b-22c3-403e-a487-3c98dad2c66a";
 
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([

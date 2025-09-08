@@ -175,7 +175,7 @@ function Home() {
                       className="text-gray-600 text-sm mb-4"
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(
-                          truncateHTML(b.description, 120)
+                          truncateHTML(b.description, 20)
                         ),
                       }}
                     />
