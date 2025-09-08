@@ -7,9 +7,12 @@ function Navbar() {
   const [inputValue, setInputValue] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [regions, setRegions] = useState([]);
+  const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
 
-  const [regions, setRegions] = useState([]);
+  // Load region
   useEffect(() => {
     fetchDataRegion();
   }, []);
@@ -17,10 +20,22 @@ function Navbar() {
     try {
       const rs = await listRegion();
       setRegions(rs.data?.data || []);
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  // Load user từ localStorage
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const username = localStorage.getItem("user");
+    if (token && username) {
+      setUser(username);
+    }
+  }, []);
+
   const handleSearch = () => {
-    console.log("Search:", inputValue);
+    navigate("/seach-beaches/"+inputValue);
   };
 
   const handleSelectRegion = (regionId) => {
@@ -29,12 +44,21 @@ function Navbar() {
     setDropdownOpen(false);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    window.location.reload();
+  };
+
   return (
     <nav className="bg-white shadow-md px-4 md:px-6 py-3">
       <div className="flex items-center justify-between">
-        {/* LEFT */}
         <div className="flex items-center">
-          <div className="flex items-center text-lg md:text-xl font-bold text-blue-600">
+          <div
+            className="flex items-center text-lg md:text-xl font-bold text-blue-600 cursor-pointer"
+            onClick={() => navigate("/")}
+          >
             🌴 SeaView
           </div>
           <button
@@ -46,7 +70,6 @@ function Navbar() {
         </div>
 
         <div className="hidden lg:flex items-center space-x-8">
-          {/* Menu */}
           <ul className="flex space-x-6 font-medium">
             <li>
               <Link to="/" className="hover:text-blue-600">
@@ -111,11 +134,29 @@ function Navbar() {
                 Search
               </button>
             </div>
+
+            {!user ? (
+              <button
+                onClick={() => navigate("/login-account")}
+                className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
+              >
+                Login
+              </button>
+            ) : (
+              <div className="flex items-center space-x-3">
+                <span className="text-gray-700">Hello, {user}</span>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                >
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {/* MOBILE MENU */}
       <div className={`${menuOpen ? "block" : "hidden"} lg:hidden mt-3`}>
         <ul className="space-y-2 font-medium border-t pt-2">
           <li>
@@ -165,7 +206,6 @@ function Navbar() {
           </li>
         </ul>
 
-        {/* Phone + Search (mobile) */}
         <div className="mt-4 space-y-2">
           <div className="text-gray-600 px-4">
             📞 <span className="font-medium">0 (800) 123-456</span>
@@ -185,6 +225,26 @@ function Navbar() {
               Search
             </button>
           </div>
+        </div>
+        <div className="px-4 mt-2">
+          {!user ? (
+            <button
+              onClick={() => navigate("/login-account")}
+              className="bg-green-600 text-white w-full py-2 rounded hover:bg-green-700"
+            >
+              Login
+            </button>
+          ) : (
+            <div className="flex items-center justify-between">
+              <span className="text-gray-700">Hello, {user}</span>
+              <button
+                onClick={handleLogout}
+                className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+              >
+                Logout
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>

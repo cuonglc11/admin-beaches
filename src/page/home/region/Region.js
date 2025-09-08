@@ -14,7 +14,7 @@ function RegionBeaches() {
   }, [id]);
   const fetchBeaches = async () => {
     try {
-      const rs = await listRegionBeaches(id);
+      const rs = await listRegionBeaches(id == "all" ? null : id);
       console.log(rs.data?.message);
       setRegion(rs.data?.message || "");
       setBeaches(rs.data?.data || []);

@@ -214,7 +214,10 @@ function Home() {
                         <span>Map</span>
                       </button>
                     )}
-                    <button className="flex items-center gap-2 hover:text-blue-500 transition">
+                    <button
+                      className="flex items-center gap-2 hover:text-blue-500 transition"
+                      onClick={() => detailBeaches(b.id, b)}
+                    >
                       <FaRegComment className="text-lg" />
                       <span>{b.comments_count}</span>
                     </button>
