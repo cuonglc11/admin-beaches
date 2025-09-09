@@ -2,45 +2,45 @@ function Footer() {
   return (
     <footer className="bg-gradient-to-r from-cyan-600 to-blue-700 text-white py-10">
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Logo & Giới thiệu */}
+        {/* Logo & Introduction */}
         <div>
           <h2 className="text-2xl font-bold mb-3">SeaTravel</h2>
           <p className="text-gray-100">
-            Khám phá những bãi biển đẹp nhất Việt Nam và thế giới. Trải nghiệm
-            du lịch trọn vẹn cùng chúng tôi.
+            Discover the most beautiful beaches in Vietnam and around the world.
+            Enjoy a complete travel experience with us.
           </p>
         </div>
 
-        {/* Liên kết nhanh */}
+        {/* Quick Links */}
         <div>
-          <h3 className="text-lg font-semibold mb-3">Liên kết</h3>
+          <h3 className="text-lg font-semibold mb-3">Quick Links</h3>
           <ul className="space-y-2">
             <li>
               <a href="#home" className="hover:underline">
-                Trang chủ
+                Home
               </a>
             </li>
             <li>
               <a href="#destinations" className="hover:underline">
-                Điểm đến
+                Destinations
               </a>
             </li>
             <li>
               <a href="#gallery" className="hover:underline">
-                Thư viện ảnh
+                Gallery
               </a>
             </li>
             <li>
               <a href="#contact" className="hover:underline">
-                Liên hệ
+                Contact
               </a>
             </li>
           </ul>
         </div>
 
-        {/* Liên hệ */}
+        {/* Contact */}
         <div>
-          <h3 className="text-lg font-semibold mb-3">Liên hệ</h3>
+          <h3 className="text-lg font-semibold mb-3">Contact</h3>
           <p>Email: support@seatravel.com</p>
           <p>Hotline: +84 123 456 789</p>
           <div className="flex gap-4 mt-4">

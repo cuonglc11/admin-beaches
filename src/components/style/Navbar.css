@@ -150,6 +150,71 @@
     background: #007c8c;
 }
 
+/* Dark Mode */
+body.dark {
+    background: #121212;
+    color: #eee;
+}
+
+body.dark .navbar {
+    background: #1e1e1e;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+body.dark .navbar-links a,
+body.dark .dropdown-title,
+body.dark .call-text {
+    color: #ddd;
+}
+
+body.dark .navbar-links a:hover,
+body.dark .dropdown-title:hover {
+    color: #f9a825;
+}
+
+body.dark .dropdown-menu {
+    background: #333;
+}
+
+body.dark .dropdown-menu li {
+    color: #eee;
+}
+
+body.dark .dropdown-menu li:hover {
+    background: #555;
+}
+
+body.dark .navbar-search {
+    background: #2a2a2a;
+}
+
+body.dark .navbar-search input {
+    color: #fff;
+}
+
+body.dark .navbar-search button {
+    background: #00a0a0;
+}
+
+body.dark .call-number {
+    color: #ffcc66;
+}
+
+/* Toggle button */
+.toggle-btn {
+    margin-left: 15px;
+    font-size: 18px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.toggle-btn:hover {
+    transform: rotate(20deg);
+}
+
+
 /* Hamburger Icon */
 .navbar-toggle {
     display: none;

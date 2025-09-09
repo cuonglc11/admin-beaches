@@ -25,6 +25,7 @@ import Comment from "../page/admin/Comment";
 import RegionBeaches from "../page/home/region/Region";
 import SeachBeaches from "../page/home/seachBeache/SeachBeaches";
 import Favorites from "../page/home/favorites/Favorites";
+import Profile from "../page/account/Profile";
 
 const auth = () => {
   const token = localStorage.getItem("token");
@@ -198,6 +199,16 @@ const AppRouter = () => {
             <HomeLayout>
               <SeachBeaches />
             </HomeLayout>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateAccountRoute>
+              <HomeLayout>
+                <Profile />
+              </HomeLayout>
+            </PrivateAccountRoute>
           }
         />
         <Route

@@ -6,7 +6,7 @@ import { FaMapMarkerAlt, FaHeart, FaRegComment } from "react-icons/fa";
 import DOMPurify from "dompurify";
 import { toast } from "react-toastify";
 
-function BeachCard({ beach }) {
+function BeachCard({ beach, onOpenMap }) {
   const thumbnail =
     beach.images && beach.images.length > 0
       ? url + "" + beach.images[0].img_link
@@ -92,7 +92,7 @@ function BeachCard({ beach }) {
           {beach.name}
         </h2>
         <p className="text-sm text-gray-500 mt-1">
-          <b className="text-gray-700">Regions:</b> {beach.region.name}
+          <b className="text-gray-700">Regions:</b> {beach?.region?.name}
         </p>
         <div
           className="mt-2 text-gray-600 text-sm"
@@ -105,7 +105,11 @@ function BeachCard({ beach }) {
           {beach.latitude && beach.longitude && (
             <button
               className="inline-flex items-center gap-2 px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition"
-              onClick={() => setMapModalOpen(true)}
+              onClick={() =>
+                beach.latitude &&
+                beach.longitude &&
+                onOpenMap(beach.latitude, beach.longitude)
+              }
             >
               <FaMapMarkerAlt /> Map
             </button>
@@ -126,28 +130,6 @@ function BeachCard({ beach }) {
           </div>
         </div>
       </div>
-
-      {mapModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button
-              onClick={() => setMapModalOpen(false)}
-              className="close-btn"
-            >
-              ✕
-            </button>
-            <iframe
-              src={`https://www.google.com/maps?q=${beach.latitude},${beach.longitude}&hl=es;z=14&output=embed`}
-              width="100%"
-              height="400"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              title="Map"
-            ></iframe>
-          </div>
-        </div>
-      )}
     </>
   );
 }

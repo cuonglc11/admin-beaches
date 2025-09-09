@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { listRegion } from "../api/function";
-
+import "./style/Navbar.css";
 function Navbar() {
   const [inputValue, setInputValue] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [regions, setRegions] = useState([]);
   const [user, setUser] = useState(null);
-
+  const [darkMode, setDarkMode] = useState(false);
   const navigate = useNavigate();
 
   // Load region
@@ -50,9 +50,18 @@ function Navbar() {
     setUser(null);
     window.location.reload();
   };
-
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    if (!darkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
+    }
+  };
   return (
-    <nav className="bg-white shadow-md px-4 md:px-6 py-3">
+    <nav className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <div
@@ -109,16 +118,16 @@ function Navbar() {
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:text-blue-600">
-                Contact
+              <Link to="/profile" className="hover:text-blue-600">
+                Profile
               </Link>
             </li>
           </ul>
 
           <div className="flex items-center space-x-6">
-            <div className="text-gray-600">
-              📞 <span className="font-medium">0 (800) 123-456</span>
-            </div>
+            <button className="toggle-btn" onClick={toggleDarkMode}>
+              {darkMode ? "🌙" : "☀️"}
+            </button>
             <div className="flex border rounded overflow-hidden">
               <input
                 type="text"
@@ -207,9 +216,9 @@ function Navbar() {
         </ul>
 
         <div className="mt-4 space-y-2">
-          <div className="text-gray-600 px-4">
-            📞 <span className="font-medium">0 (800) 123-456</span>
-          </div>
+          <button className="toggle-btn" onClick={toggleDarkMode}>
+            {darkMode ? "🌙" : "☀️"}
+          </button>
           <div className="flex border rounded overflow-hidden mx-4">
             <input
               type="text"

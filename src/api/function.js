@@ -108,3 +108,11 @@ export const listRegionBeachesKeyword = (keyword) => {
 };
 export const visitAdd = () => api.post("visit");
 export const visitTotal = () => api.get("visit");
+export const accountDetal = () => api.get("customer/account");
+export const accountUpdate = (data) =>
+  api.post("customer/update-account", data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  

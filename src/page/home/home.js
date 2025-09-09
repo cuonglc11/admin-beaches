@@ -24,6 +24,20 @@ import {
 import { useNavigate } from "react-router-dom";
 
 function Home() {
+  // const list = [
+  //   {
+  //     img: "https://nads.1cdn.vn/2024/11/22/74da3f39-759b-4f08-8850-4c8f2937e81a-1_mangeshdes.png",
+  //   },
+  //   {
+  //     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNJ5FOZqZOKBYTOzKP6Fljt6LIbq-4ZJbBGQSukJbGiPQT5gUucjjuyP5FhDfZOnbM_24&usqp=CAU",
+  //   },
+  //   {
+  //     img: "https://nads.1cdn.vn/2024/11/22/74da3f39-759b-4f08-8850-4c8f2937e81a-1_mangeshdes.png",
+  //   },
+  //   {
+  //     img: "https://nads.1cdn.vn/2024/11/22/74da3f39-759b-4f08-8850-4c8f2937e81a-1_mangeshdes.png",
+  //   },
+  // ];
   const [beaches, setBeaches] = useState([]);
   const [imageBetifu, setImageBetifu] = useState([]);
   const navigate = useNavigate();
@@ -34,17 +48,18 @@ function Home() {
   const [mapModalOpen, setMapModalOpen] = useState(false);
   const [mapCoords, setMapCoords] = useState({ lat: null, lng: null });
   const visitedRef = useRef(false);
+  const [stats, setStats] = useState({});
 
   useEffect(() => {
-    // visitAdds();
     if (!visitedRef.current) {
       visitAdds();
       fectDataImageBe();
       fectData();
       visit();
+      abumImage();
       visitedRef.current = true;
     }
-  }, []);
+  }, [stats]);
   const visitAdds = async () => {
     if (sessionStorage.getItem("visited")) return;
     try {
@@ -53,7 +68,12 @@ function Home() {
       sessionStorage.setItem("visited", "true");
     } catch (error) {}
   };
-  const [stats, setStats] = useState({});
+  const abumImage = async () => {
+    try {
+      const rs = await ImageBanner(2);
+      setImageBetifu(rs?.data?.data || []);
+    } catch (error) {}
+  };
 
   const visit = async () => {
     try {
@@ -172,6 +192,10 @@ function Home() {
             <p className="text-xl font-bold">{stats.month}</p>
           </div>
           <div className="bg-white rounded-2xl shadow p-4 w-40">
+            <p className="text-gray-500">Online</p>
+            <p className="text-xl font-bold">{stats.online}</p>
+          </div>
+          <div className="bg-white rounded-2xl shadow p-4 w-40">
             <p className="text-gray-500">Total</p>
             <p className="text-xl font-bold">{stats.total}</p>
           </div>
@@ -275,7 +299,69 @@ function Home() {
           ))}
         </Swiper>
       </section>
-      <Experience />
+      <section className="py-16 bg-white text-center">
+        <h2 className="text-3xl font-bold mb-6">🌴 About Us</h2>
+        <p className="max-w-3xl mx-auto text-gray-600 text-lg leading-relaxed">
+          We are dedicated to bringing you the most beautiful beaches and travel
+          experiences. Whether you're looking for relaxation, adventure, or
+          culture – we’ve got you covered.
+        </p>
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay]}
+          spaceBetween={20}
+          slidesPerView={3}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 3000 }}
+          loop={true}
+          breakpoints={{
+            0: { slidesPerView: 1 },
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
+          className="my-8"
+        >
+          {imageBetifu.map((b, i) => (
+            <SwiperSlide key={i}>
+              <div className="h-60 overflow-hidden rounded-2xl">
+                <img
+                  src={url + "" + b.img}
+                  alt={`slide-${i}`}
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </section>
+      <section className="py-16 bg-gray-50">
+        <h2 className="text-3xl font-bold text-center mb-12">
+          ✨ Our Services
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="bg-white rounded-2xl shadow p-6 text-center">
+            <h3 className="font-bold text-xl mb-3">🏖️ Beach Guides</h3>
+            <p className="text-gray-600">
+              Explore detailed guides of the most stunning beaches around the
+              world.
+            </p>
+          </div>
+          <div className="bg-white rounded-2xl shadow p-6 text-center">
+            <h3 className="font-bold text-xl mb-3">📍 Interactive Maps</h3>
+            <p className="text-gray-600">
+              Find locations easily with our built-in maps and travel
+              suggestions.
+            </p>
+          </div>
+          <div className="bg-white rounded-2xl shadow p-6 text-center">
+            <h3 className="font-bold text-xl mb-3">💬 Reviews & Community</h3>
+            <p className="text-gray-600">
+              Read real reviews and connect with travelers sharing experiences.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <Testimonial />
 
       {/* Modal Map */}
