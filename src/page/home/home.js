@@ -24,32 +24,15 @@ import {
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  // const list = [
-  //   {
-  //     img: "https://nads.1cdn.vn/2024/11/22/74da3f39-759b-4f08-8850-4c8f2937e81a-1_mangeshdes.png",
-  //   },
-  //   {
-  //     img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNJ5FOZqZOKBYTOzKP6Fljt6LIbq-4ZJbBGQSukJbGiPQT5gUucjjuyP5FhDfZOnbM_24&usqp=CAU",
-  //   },
-  //   {
-  //     img: "https://nads.1cdn.vn/2024/11/22/74da3f39-759b-4f08-8850-4c8f2937e81a-1_mangeshdes.png",
-  //   },
-  //   {
-  //     img: "https://nads.1cdn.vn/2024/11/22/74da3f39-759b-4f08-8850-4c8f2937e81a-1_mangeshdes.png",
-  //   },
-  // ];
   const [beaches, setBeaches] = useState([]);
   const [imageBetifu, setImageBetifu] = useState([]);
   const navigate = useNavigate();
-
   const [favoritesState, setFavoritesState] = useState({});
   const [favoritesCount, setFavoritesCount] = useState({});
-  // Modal state
   const [mapModalOpen, setMapModalOpen] = useState(false);
   const [mapCoords, setMapCoords] = useState({ lat: null, lng: null });
   const visitedRef = useRef(false);
   const [stats, setStats] = useState({});
-
   useEffect(() => {
     if (!visitedRef.current) {
       visitAdds();
@@ -300,7 +283,7 @@ function Home() {
         </Swiper>
       </section>
       <section className="py-16 bg-white text-center">
-        <h2 className="text-3xl font-bold mb-6">🌴 About Us</h2>
+        <h2 className="text-3xl font-bold mb-6">🌴Beach Photo Album</h2>
         <p className="max-w-3xl mx-auto text-gray-600 text-lg leading-relaxed">
           We are dedicated to bringing you the most beautiful beaches and travel
           experiences. Whether you're looking for relaxation, adventure, or

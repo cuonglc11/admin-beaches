@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { favorites } from "../../../api/function";
 import BeachCard from "../../../components/BeachCard";
-
+import "../region/style.css";
 function Favorites() {
   const [beaches, setBeaches] = useState([]);
   const [mapData, setMapData] = useState(null);
@@ -17,7 +17,7 @@ function Favorites() {
     } catch (error) {}
   };
   return (
-    <>
+    <div className="region-container">
       <div className="grid">
         {beaches.length > 0 ? (
           beaches.map((beach) => (
@@ -53,7 +53,7 @@ function Favorites() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

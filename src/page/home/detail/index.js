@@ -15,7 +15,8 @@ function DetailBeaches() {
       if (id) {
         try {
           const rs = await detailBeaches(id);
-          setDescription(rs?.data?.data?.description);
+          console.log(rs?.data?.data);
+          setDescription(rs?.data?.data);
           if (rs?.data?.data === null) {
             navigate("/this-page-does-not-exist");
           }
@@ -39,9 +40,12 @@ function DetailBeaches() {
     <>
       <Slider slide={slides} />
       <div className="page-content">
+        <h1 className="text-center font-bold text-4xl mb-3">
+          {description.name}
+        </h1>{" "}
         <div
           className="text-gray-600 text-sm mb-4"
-          dangerouslySetInnerHTML={{ __html: description }}
+          dangerouslySetInnerHTML={{ __html: description.description }}
         />
         <div className="content-layout">
           <CommentSection idBeaches={id} />

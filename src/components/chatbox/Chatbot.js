@@ -5,7 +5,7 @@ const ROBOT_ICON_URL = "./chat.png";
 
 const Chatbot = () => {
   const N8N_WEBHOOK_URL =
-    "https://7c539b32903a.ngrok-free.app/webhook/dd2cc16b-22c3-403e-a487-3c98dad2c66a";
+    "https://53eaf35f664c.ngrok-free.app/webhook/dd2cc16b-22c3-403e-a487-3c98dad2c66a";
 
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -112,7 +112,7 @@ const Chatbot = () => {
       {isOpen ? (
         <div className="chat-container open">
           <div className="chat-header">
-            <h3>ChatBox AI</h3>
+            <h3>SeaTalk</h3>
             <button onClick={toggleChat} className="close-btn">
               -
             </button>

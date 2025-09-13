@@ -38,7 +38,6 @@ function Region() {
     setIsLoading(true);
     try {
       const method = formData.id !== null ? "PUT" : "POST";
-      console.log(method);
       let rs;
       if (method === "POST") {
         rs = await addRegion({ name: formData.name });
@@ -70,13 +69,11 @@ function Region() {
     setFormData(value);
     setShowForm(true);
   };
-  const handleSearch = async() => {
+  const handleSearch = async () => {
     try {
       const rs = await searchRegion(search);
       setRegions(rs.data?.data || []);
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
   const handleDelete = (value) => {
     Swal.fire({

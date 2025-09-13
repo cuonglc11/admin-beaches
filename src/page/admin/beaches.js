@@ -55,6 +55,7 @@ function Beaches() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
+    setIsLoading(true);
 
     formData.images.forEach((file) => {
       if (file instanceof File) {
@@ -102,6 +103,8 @@ function Beaches() {
       } else {
         toast.error("Có lỗi xảy ra, vui lòng thử lại!");
       }
+      setIsLoading(false);
+    } finally {
       setIsLoading(false);
     }
   };

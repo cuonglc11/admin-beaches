@@ -21,7 +21,6 @@ function BeachCard({ beach, onOpenMap }) {
       : text;
   };
 
-  const [mapModalOpen, setMapModalOpen] = useState(false);
   const [favoritesState, setFavoritesState] = useState({});
   const [favoritesCount, setFavoritesCount] = useState({});
 
